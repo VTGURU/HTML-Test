@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Request a Service or Report an Issue</title>
+    <style>
+        /* Add your CSS styling here */
+        /* This is just for basic demonstration */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-top: 20px;
+                }
+         .icon-document-attachment:before {
+         content:"\f16b";
+         }
+         
+        .form-group {
+            margin-bottom: 30px;
+        }
+        label {
+            font-weight: bold;
+            padding-bottom: 5px;
+        }
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+        }
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function showFields(option) {
+            var accessRequest = document.getElementById("accessRequest");
+            var ApplicationRequest = document.getElementById("ApplicationRequest");
+            var publishApplication = document.getElementById("publishApplication");
+            var removeApplication = document.getElementById("removeApplication");
+            var changeURL = document.getElementById("changeURL");
+   
+            accessRequest.style.display = option === "1" ? "block" : "none";
+            ApplicationRequest.style.display = option === "5" ? "block" : "none";
+            publishApplication.style.display = option === "2" ? "block" : "none";
+            removeApplication.style.display = option === "3" ? "block" : "none";
+            changeURL.style.display = option === "4" ? "block" : "none";
+        }
+    </script>
+    <script>
+            function showFields(option) {
+                var FailedtoLaunchPublishedApplication = document.getElementById("FailedtoLaunchPublishedApplication");
+                var SGD = document.getElementById("SGD");
+                var removeApplication = document.getElementById("removeApplication");
+                var changeURL = document.getElementById("changeURL");
+        
+                FailedtoLaunchPublishedApplication.style.display = option === "1" ? "block" : "none";
+                SGD.style.display = option === "2" ? "block" : "none";
+                removeApplication.style.display = option === "3" ? "block" : "none";
+                changeURL.style.display = option === "4" ? "block" : "none";
+            }
+    </script> 
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center p-2">Request a Service or Report an Issue</h2>
+        <form action="#" method="post">       
+           <div class="form-group soption">
+                <div class="form-check form-check-inline" >
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions"  value="RService">
+                    <label class="form-check-label" for="inlineRadio1">Request a Service</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" value="RIssue">
+                    <label class="form-check-label" for="inlineRadio2">Report an Issue</label>
+                  </div>
+            </div>
+            <div class="form-group d-none" id="platforms" >
+                <label for="platform">Please select the Name of Citrix Platform:</label>               
+                <select class="form-select" aria-label="Default select example" id="CPlatform">
+                    <option value="">Select Citrix Platform</option>
+                    <option value="hafs_citrix">HAFS Citrix</option>
+                    <option value="vantage_citrix">VANTAGE Citrix</option>
+                  </select>
+            </div>           
+            <div class="Services_Box">
+                <div class="Service_Hafs_box">
+                    <div class="form-group d-none serviceOption" id="hafs_citrix" >
+                        <label for="platform">Request a Service</label>               
+                        <select class="form-select" aria-label="Default select example" id="hafs_citrix_services">
+                            <option value="">Select an option</option>
+                            <option value="hafAccessRequest">Access Request</option>
+                            <option value="hafApplicationRequest">Application Request</option>
+                            <option value="hafTservers">Terminal Servers Request</option>
+                            <option value="hafMaintenance">Maintenance</option>
+                            <option value="hafPEP">Support Request</option>
+                            <option value="hafPEP">Audit Request</option>
+                          </select>                   
+                            <div id="hafAccessRequest" class="service-sub-form d-none">
+                                <div class="mt-4 ACRequestForm">
+                                    <div class="form-check ">
+                                        <input class="form-check-input" type="radio" name="accreq" id="inlineRadio1" value="ARaddaccess">
+                                        <label class="form-check-label" for="inlineRadio1">Add Access</label>
+                                    </div>
+                                    <div class="form-check ">
+                                        <input class="form-check-input" type="radio" name="accreq" id="inlineRadio2" value="ARmodifyaccess">
+                                        <label class="form-check-label" for="inlineRadio2">Modify Access</label>
+                                    </div>
+                                    <div class="form-check ">
+                                        <input class="form-check-input" type="radio" name="accreq" id="inlineRadio3" value="ARremoveaccess">
+                                        <label class="form-check-label" for="inlineRadio3">Remove Access</label>
+                                    </div>
+                                </div>
+                            <div id="hafApplication_Request" class="service-sub-form d-none">
+                                    <div class="mt-4 Application_RequestForm">
+                                        <div class="form-check ">
+                                            <input class="form-check-input" type="radio" name="appreq" id="inlineRadio1" value="ARaddaccess">
+                                            <label class="form-check-label" for="inlineRadio1">New Application</label>
+                                        </div>
+                                        <div class="form-check ">
+                                            <input class="form-check-input" type="radio" name="appreq" id="inlineRadio2" value="ARmodifyaccess">
+                                            <label class="form-check-label" for="inlineRadio2">Modify Application</label>
+                                        </div>
+                                        <div class="form-check ">
+                                            <input class="form-check-input" type="radio" name="appreq" id="inlineRadio3" value="ARremoveaccess">
+                                            <label class="form-check-label" for="inlineRadio3">Remove Application</label>
+                                        </div>
+                                    </div>
+                                    <div id="hafTSRequest" class="service-sub-form d-none">
+                                        <div class="mt-4 TSRequestForm">
+                                            <div class="form-check ">
+                                                <input class="form-check-input" type="radio" name="TSreq" id="inlineRadio1" value="ARaddaccess">
+                                                <label class="form-check-label" for="inlineRadio1">New Terminal Server</label>
+                                            </div>
+                                            <div class="form-check ">
+                                                <input class="form-check-input" type="radio" name="TSreq" id="inlineRadio2" value="ARmodifyaccess">
+                                                <label class="form-check-label" for="inlineRadio2">Modify Terminal Server</label>
+                                            </div>
+                                            <div class="form-check ">
+                                                <input class="form-check-input" type="radio" name="TSreq" id="inlineRadio3" value="ARremoveaccess">
+                                                <label class="form-check-label" for="inlineRadio3">Remove Terminal Server</label>
+                                            </div>
+                                        </div>                                    
+                                <div id="ARaddaccess" class="accrequest-form d-none mt-4">
+                                    <div class="isappsys">
+                                        <label for="appNamePublish">What application/system do you require access to?</label>
+                                        <select class="form-select" aria-label="Default select example" id="addAcesss">
+                                            <option value="">Select an option</option>
+                                            <option value="hFPEP">PEP</option>
+                                            <option value="hafAccessRequest" >OnQ R&I </option>
+                                            <option value="hafpublishApplication">Agilysys</option>
+                                            <option value="hafRemoveApplication">Trintech</option>
+                                            <option value="hafChangeURL">Blackline</option>                    
+                                        </select>   
+                                    </div>
+                                    <div class="form-check mt-4">                          
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="ARapplicationsys" id="ARapplicationsys">
+                                            <label class="form-check-label" for="ARapplicationsys">
+                                                Check this box if the application/system is not listed.
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 forappsys d-none">
+                                        <label for="appNamePublish">* Please enter the name of the application or system:</label>
+                                        <input class="form-control" type="text" placeholder="Search for job role to select" aria-label="default input example">
+                                    </div>
+                                    <div class="mt-4 forappsys d-none ">
+                                        <label for="appNamePublish">* Please enter or describe the role or permission</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                    <div class="mt-4 isappsys rolePermission">
+                                        <label for="appNamePublish mt-4">*Roles or permissions needed:</label>
+                                        <input class="form-control" type="text" placeholder="Search for job role to select" aria-label="default input example">
+                                    </div>
+                                    <div class="form-check mt-4 isappsys">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="ARpermission" id="ARpermission">
+                                            <label class="form-check-label" for="ARpermission">
+                                                Check this box if the role or permission is not listed.
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 d-none forpermission">
+                                        <label for="appNamePublish">* Please enter or describe the role or permission</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                    <div class="mt-4">
+                                        <label for="appNamePublish">* Please provide a business justification and any additional relevant information for this request.
+                                        </label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div id="ARmodifyaccess" class="accrequest-form d-none mt-4">
+                                    <div >
+                                        <label for="appNamePublish">* What type of access modification?</label>
+                                        <select class="form-select" aria-label="Default select example" id="addAcesss">
+                                            <option value="">Select an option</option>
+                                            <option value="rr">Replace</option>
+                                            <option value="rall" >Replace all</option>                                                         
+                                        </select>   
+                                    </div>
+                                    <div class="isappsys mt-4">
+                                        <label for="appNamePublish">What application/system do you require access to?</label>
+                                        <select class="form-select" aria-label="Default select example" id="addAcesss">
+                                            <option value="">Select an option</option>
+                                            <option value="1app">App</option>
+                                            <option value="app1" >app1</option>
+                                            <option value="app2">app2</option>
+                                            <option value="app3">app3</option>
+                                            <option value="app2">app4</option>                    
+                                        </select>   
+                                    </div>
+                                    <div class="form-check mt-4">                          
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="ARapplicationsys" id="ARapplicationsys">
+                                            <label class="form-check-label" for="ARapplicationsys">
+                                                Check this box if the application/system is not listed.
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 forappsys d-none">
+                                        <label for="appNamePublish">* Please enter the name of the application or system:</label>
+                                        <input class="form-control" type="text" placeholder="Search for job role to select" aria-label="default input example">
+                                    </div>
+                                    <div class="mt-4 forappsys d-none ">
+                                        <label for="appNamePublish">* Please enter or describe the role or permission</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                    <div class="mt-4 isappsys rolePermission">
+                                        <label for="appNamePublish mt-4">*Roles or permissions needed:</label>
+                                        <input class="form-control" type="text" placeholder="Search for job role to select" aria-label="default input example">
+                                    </div>
+                                    <div class="form-check mt-4 isappsys">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="ARpermission" id="ARpermission">
+                                            <label class="form-check-label" for="ARpermission">
+                                                Check this box if the role or permission is not listed.
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 d-none forpermission">
+                                        <label for="appNamePublish">* Please enter or describe the role or permission</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                    <div class="mt-4">
+                                        <label for="appNamePublish">* Please provide a business justification and any additional relevant information for this request.
+                                        </label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div id="ARremoveaccess" class="accrequest-form d-none mt-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="ARremoveall" id="ARremoveall">
+                                        <label class="form-check-label" for="ARremoveall">
+                                            Remove all access?
+                                        </label>
+                                    </div>
+                                    <div class="isappsys mt-4">
+                                        <label for="appNamePublish">What application/system do you require access to?</label>
+                                        <select class="form-select" aria-label="Default select example" id="addAcesss">
+                                            <option value="">Select an option</option>
+                                            <option value="1app">App</option>
+                                            <option value="app1" >app1</option>
+                                            <option value="app2">app2</option>
+                                            <option value="app3">app3</option>
+                                            <option value="app2">app4</option>                    
+                                        </select>   
+                                    </div>
+                                    <div class="form-check mt-4">                          
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="ARapplicationsys" id="ARapplicationsys">
+                                            <label class="form-check-label" for="ARapplicationsys">
+                                                Check this box if the application/system is not listed.
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 forappsys d-none">
+                                        <label for="appNamePublish">* Please enter the name of the application or system:</label>
+                                        <input class="form-control" type="text" placeholder="Search for job role to select" aria-label="default input example">
+                                    </div>
+                                    <div class="mt-4 forappsys d-none ">
+                                        <label for="appNamePublish">* Please enter or describe the role or permission</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                    <div class="mt-4 isappsys removeAcess">
+                                        <label for="appNamePublish mt-4">*Roles or permissions needed:</label>
+                                        <input class="form-control" type="text" placeholder="Search for job role to select" aria-label="default input example">
+                                    </div>
+                                    <div class="form-check mt-4 isappsys removeAcess">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="ARpermission" id="ARpermission">
+                                            <label class="form-check-label" for="ARpermission">
+                                                Check this box if the role or permission is not listed.
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 d-none forpermission">
+                                        <label for="appNamePublish">* Please enter or describe the role or permission</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                    <div class="mt-4">
+                                        <label for="appNamePublish">* Please provide a business justification and any additional relevant information for this request.
+                                        </label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="hafpublishApplication" class="service-sub-form d-none">
+                                <label for="appNamePublish">Name of the Application [ICON Name]:</label>
+                                <div><br></div>  
+                                <input type="text" id="appNamePublish"><br>
+                                <div><br></div>  
+                                <label for="appURL">Application URL:</label>
+                                <div><br></div>  
+                                <input type="text" id="appURL"><br>
+                                <div><br></div>  
+                                <label for="jobRolesPublish">List of Job roles:</label>
+                                <div><br></div>  
+                                <!-- Add drag and drop functionality here -->
+                                <textarea id="jobRolesPublish" rows="4"></textarea><br>
+                                <div><br></div>  
+                                <label for="validatorContent">Validator/POC content details:</label>
+                                <div><br></div>  
+                                <textarea id="validatorContent" rows="4"></textarea><br>
+                                <div><br></div>  
+                                <label for="businessJustificationPublish">Business justification:</label>
+                                <div><br></div>  
+                                <textarea id="businessJustificationPublish" rows="4"></textarea><br>
+                            </div>
+                            <div id="hafRemoveApplication" class="service-sub-form d-none">
+                                <div><br></div>  
+                                <label for="publishedAppName">Published Icon Name:</label>
+                                <div><br></div>  
+                                <input type="text" id="publishedAppName"><br>
+                                <div><br></div>  
+                                <label for="preferredDateRemove">Preferred date for this change:</label>
+                                <div><br></div>  
+                                <input type="date" id="preferredDateRemove"><br>
+                                <div><br></div>  
+                                <label for="businessJustificationRemove">Business justification:</label>
+                                <div><br></div>  
+                                <textarea id="businessJustificationRemove" rows="4"></textarea><br>
+                            </div>
+                            <div id="hafChangeURL" class="service-sub-form d-none">
+                                <div><br></div>  
+                                <label for="publishedAppNameChange">Published Icon Name:</label>
+                                <input type="text" id="publishedAppNameChange"><br>
+                                <div><br></div>  
+                                <label for="preferredDateChange">Preferred date for this change:</label>
+                                <input type="date" id="preferredDateChange"><br>
+                                <div><br></div>  
+                                <label for="newURL">New URL details:</label>
+                                <div><br></div>  
+                                <input type="text" id="newURL"><br>
+                                <div><br></div>  
+                                <label for="validatorContentChange">Validator/POC content details:</label>
+                                <div><br></div>  
+                                <textarea id="validatorContentChange" rows="4"></textarea><br>
+                                <div><br></div>  
+                                <label for="businessJustificationChange">Business justification:</label>
+                                <div><br></div>  
+                                <textarea id="businessJustificationChange" rows="4"></textarea><br>
+                            </div>
+                    </div>
+                </div>
+                <div class="Service_Vant_box">
+                    <div class="form-group d-none serviceOption" id="vantage_citrix" >
+                        <label for="platform">Request a Service</label>               
+                        <select class="form-select" aria-label="Default select example" id="vant_citrix_services">
+                            <option value="">Select an option</option>
+                            <option value="1">Vattage</option>
+                  
+                            <option value="vantAccessRequest">Access Request</option>
+                            <option value="vantpublishApplication">Publish a New Application</option>
+                            <option value="vantRemoveApplication">Remove published Application</option>
+                            <option value="vantChangeURL">Change Published App URL</option>
+                            <option value="vantAgilysys">Agilysys</option>
+                            <option value="vantCwanrelease">Citrix workspace app new releases</option>
+                            <option value="vantEusupport">End User Support (Macros/Can't Open Application/Can't Log in)</option>
+                            <option value="vantMpatching"> Maintenance / Patching</option>
+                            <option value="vantnApplication"> New Application</option>
+                            <option value="vantOutage">Outages</option>
+                            <option value="vantRPS">RPA</option>
+                            <option value="vantSiupgrade">Server Issues / Upgrades</option>
+                            <option value="vantTservers">Terminal Servers</option>
+                            <option value="vantTMX">TMX</option>
+                            <option value="vantMaintenance"> Maintenance</option>
+                            <option value="vantPEP"> PEP</option>
+                            <option value="vantOthers">Other - details below</option>                 
+                        </select>
+                        <div id="vantAccessRequest" class="service-sub-form d-none">
+                            <div class="mt-4 ACRequestForm">
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="radio" name="vataccreq" id="vatinlineRadio1" value="vatARaddaccess">
+                                    <label class="form-check-label" for="inlineRadio1">Add Access</label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="radio" name="vataccreq" id="vatinlineRadio2" value="vatARmodifyaccess">
+                                    <label class="form-check-label" for="inlineRadio2">Modify Access</label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="radio" name="vataccreq" id="vatinlineRadio3" value="vatARremoveaccess">
+                                    <label class="form-check-label" for="vatinlineRadio3">Remove Access</label>
+                                </div>
+                            </div>
+                            <div id="vatARaddaccess" class="accrequest-form d-none mt-4">
+                                <div class="isappsys">
+                                    <label for="appNamePublish">What application/system do you require access to?</label>
+                                    <select class="form-select" aria-label="Default select example" id="addAcesss">
+                                        <option value="">Select an option</option>
+                                        <option value="1">PEP</option>
+                                        <option value="hafAccessRequest" >OnQ RnI</option>
+                                        <option value="hafpublishApplication">Hotel Connect</option>
+                                        <option value="hafRemoveApplication">app3</option>
+                                        <option value="hafChangeURL">app4</option>                    
+                                    </select>   
+                                </div>
+                                <div class="form-check mt-4">                          
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="ARapplicationsys" id="ARapplicationsys">
+                                        <label class="form-check-label" for="ARapplicationsys">
+                                            Check this box if the application/system is not listed.
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mt-4 forappsys d-none">
+                                    <label for="appNamePublish">* Please enter the name of the application or system:</label>
+                                    <input class="form-control" type="text" placeholder="Search for job role to select" aria-label="default input example">
+                                </div>
+                                <div class="mt-4 forappsys d-none ">
+                                    <label for="appNamePublish">* Please enter or describe the role or permission</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <div class="mt-4 isappsys rolePermission">
+                                    <label for="appNamePublish mt-4">*Roles or permissions needed:</label>
+                                    <input class="form-control" type="text" placeholder="Search for job role to select" aria-label="default input example">
+                                </div>
+                                <div class="form-check mt-4 isappsys">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="ARpermission" id="ARpermission">
+                                        <label class="form-check-label" for="ARpermission">
+                                            Check this box if the role or permission is not listed.
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mt-4 d-none forpermission">
+                                    <label for="appNamePublish">* Please enter or describe the role or permission</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <div class="mt-4">
+                                    <label for="appNamePublish">* Please provide a business justification and any additional relevant information for this request.
+                                    </label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div id="vatARmodifyaccess" class="accrequest-form d-none mt-4">
+                                <div >
+                                    <label for="appNamePublish">* What type of access modification?</label>
+                                    <select class="form-select" aria-label="Default select example" id="addAcesss">
+                                        <option value="">Select an option</option>
+                                        <option value="rr">Replace</option>
+                                        <option value="rall" >Replace all</option>                                                         
+                                    </select>   
+                                </div>
+                                <div class="isappsys mt-4">
+                                    <label for="appNamePublish">What application/system do you require access to?</label>
+                                    <select class="form-select" aria-label="Default select example" id="addAcesss">
+                                        <option value="">Select an option</option>
+                                        <option value="1app">App</option>
+                                        <option value="app1" >app1</option>
+                                        <option value="app2">app2</option>
+                                        <option value="app3">app3</option>
+                                        <option value="app2">app4</option>                    
+                                    </select>   
+                                </div>
+                                <div class="form-check mt-4">                          
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="ARapplicationsys" id="ARapplicationsys">
+                                        <label class="form-check-label" for="ARapplicationsys">
+                                            Check this box if the application/system is not listed.
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mt-4 forappsys d-none">
+                                    <label for="appNamePublish">* Please enter the name of the application or system:</label>
+                                    <input class="form-control" type="text" placeholder="Search for job role to select" aria-label="default input example">
+                                </div>
+                                <div class="mt-4 forappsys d-none ">
+                                    <label for="appNamePublish">* Please enter or describe the role or permission</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <div class="mt-4 isappsys rolePermission">
+                                    <label for="appNamePublish mt-4">*Roles or permissions needed:</label>
+                                    <input class="form-control" type="text" placeholder="Search for job role to select" aria-label="default input example">
+                                </div>
+                                <div class="form-check mt-4 isappsys">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="ARpermission" id="ARpermission">
+                                        <label class="form-check-label" for="ARpermission">
+                                            Check this box if the role or permission is not listed.
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mt-4 d-none forpermission">
+                                    <label for="appNamePublish">* Please enter or describe the role or permission</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <div class="mt-4">
+                                    <label for="appNamePublish">* Please provide a business justification and any additional relevant information for this request.
+                                    </label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div id="vatARremoveaccess" class="accrequest-form d-none mt-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="ARremoveall" id="ARremoveall">
+                                    <label class="form-check-label" for="ARremoveall">
+                                        Remove all access?
+                                    </label>
+                                </div>
+                                <div class="isappsys mt-4">
+                                    <label for="appNamePublish">What application/system do you require access to?</label>
+                                    <select class="form-select" aria-label="Default select example" id="addAcesss">
+                                        <option value="">Select an option</option>
+                                        <option value="1app">App</option>
+                                        <option value="app1" >app1</option>
+                                        <option value="app2">app2</option>
+                                        <option value="app3">app3</option>
+                                        <option value="app2">app4</option>                    
+                                    </select>   
+                                </div>
+                                <div class="form-check mt-4">                          
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="ARapplicationsys" id="ARapplicationsys">
+                                        <label class="form-check-label" for="ARapplicationsys">
+                                            Check this box if the application/system is not listed.
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mt-4 forappsys d-none">
+                                    <label for="appNamePublish">* Please enter the name of the application or system:</label>
+                                    <input class="form-control" type="text" placeholder="Search for job role to select" aria-label="default input example">
+                                </div>
+                                <div class="mt-4 forappsys d-none ">
+                                    <label for="appNamePublish">* Please enter or describe the role or permission</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <div class="mt-4 isappsys removeAcess">
+                                    <label for="appNamePublish mt-4">*Roles or permissions needed:</label>
+                                    <input class="form-control" type="text" placeholder="Search for job role to select" aria-label="default input example">
+                                </div>
+                                <div class="form-check mt-4 isappsys removeAcess">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="ARpermission" id="ARpermission">
+                                        <label class="form-check-label" for="ARpermission">
+                                            Check this box if the role or permission is not listed.
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mt-4 d-none forpermission">
+                                    <label for="appNamePublish">* Please enter or describe the role or permission</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <div class="mt-4">
+                                    <label for="appNamePublish">* Please provide a business justification and any additional relevant information for this request.
+                                    </label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="vantpublishApplication" class="service-sub-form d-none">
+                            <label for="appNamePublish">Name of the Application [ICON Name]:</label>
+                            <div><br></div>  
+                            <input type="text" id="appNamePublish"><br>
+                            <div><br></div>  
+                            <label for="appURL">Application URL:</label>
+                            <div><br></div>  
+                            <input type="text" id="appURL"><br>
+                            <div><br></div>  
+                            <label for="jobRolesPublish">List of Job roles:</label>
+                            <div><br></div>  
+                            <!-- Add drag and drop functionality here -->
+                            <textarea id="jobRolesPublish" rows="4"></textarea><br>
+                            <div><br></div>  
+                            <label for="validatorContent">Validator/POC content details:</label>
+                            <div><br></div>  
+                            <textarea id="validatorContent" rows="4"></textarea><br>
+                            <div><br></div>  
+                            <label for="businessJustificationPublish">Business justification:</label>
+                            <div><br></div>  
+                            <textarea id="businessJustificationPublish" rows="4"></textarea><br>
+                        </div>
+                        <div id="vantRemoveApplication" class="service-sub-form d-none">
+                            <div><br></div>  
+                            <label for="publishedAppName">Published Icon Name:</label>
+                            <div><br></div>  
+                            <input type="text" id="publishedAppName"><br>
+                            <div><br></div>  
+                            <label for="preferredDateRemove">Preferred date for this change:</label>
+                            <div><br></div>  
+                            <input type="date" id="preferredDateRemove"><br>
+                            <div><br></div>  
+                            <label for="businessJustificationRemove">Business justification:</label>
+                            <div><br></div>  
+                            <textarea id="businessJustificationRemove" rows="4"></textarea><br>
+                        </div>
+                        <div id="vantChangeURL" class="service-sub-form d-none">
+                            <div><br></div>  
+                            <label for="publishedAppNameChange">Published Icon Name:</label>
+                            <input type="text" id="publishedAppNameChange"><br>
+                            <div><br></div>  
+                            <label for="preferredDateChange">Preferred date for this change:</label>
+                            <input type="date" id="preferredDateChange"><br>
+                            <div><br></div>  
+                            <label for="newURL">New URL details:</label>
+                            <div><br></div>  
+                            <input type="text" id="newURL"><br>
+                            <div><br></div>  
+                            <label for="validatorContentChange">Validator/POC content details:</label>
+                            <div><br></div>  
+                            <textarea id="validatorContentChange" rows="4"></textarea><br>
+                            <div><br></div>  
+                            <label for="businessJustificationChange">Business justification:</label>
+                            <div><br></div>  
+                            <textarea id="businessJustificationChange" rows="4"></textarea><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="Issues_Box">
+                <div class="issue_haf_box">
+                    <div class="form-group d-none issueOption" id="hafs_citrix_i" >
+                        <label for="platform">Report an issue</label>               
+                        <select id="issue_hafs_citrix">
+                            <option value="">Select an option</option>
+                            <option value="haf_App_issue">Application Issue</option>
+                            <option value="haf_TS_issue">Terminal Server Issue</option>
+                            <option value="haf_Login_issue">Login Issue</option>
+                            <option value="haf_Outage_issue">Outage Issue</option>
+                            <option value="issue_hafs_flpa">Failed to Launch Published Application</option>
+                            <option value="issue_hafs_SGD">Session Getting Disconnection</option>
+                            <option value="issue_hafs_apli">Application Login Issue</option>
+                            <option value="issue_hafs_rdi">Remote Desktop Issue</option>
+                            <option value="issue_hafs_pepli">PEP Login Issue</option>
+                            <option value="issue_hafs_hci">Hotel Connect Issue</option>
+                        </select>
+                        <div id="issue_hafs_flpa" class="issue-sub-form d-none">
+                            <label for="appName">Published Application Name:</label>
+                            <input type="text" id="appName"><br>
+                            <label for="jobRoles">List of impacted user names</label>
+                            <!-- Add drag and drop functionality here -->
+                            <textarea id="jobRoles" rows="4"></textarea><br>
+                            <label for="preferredDateTroubleshooting">Preferred date/time for Troubleshoot Session:</label>
+                            <input type="date" id="preferredDateTroubleshooting"><br>
+                            <textarea id="businessJustification" rows="4"></textarea><br>
+                        </div>
+                        <div id="issue_hafs_SGD" class="issue-sub-form d-none">
+                            <label for="appNamePublish">Name of the Application [ICON Name]:</label>
+                            <input type="text" id="appNamePublish"><br>
+                            <label for="appURL">Application URL:</label>
+                            <input type="text" id="appURL"><br>
+                            <label for="jobRolesPublish">List of Job roles:</label>
+                            <!-- Add drag and drop functionality here -->
+                            <textarea id="jobRolesPublish" rows="4"></textarea><br>
+                            <label for="validatorContent">Validator/POC content details:</label>
+                            <textarea id="validatorContent" rows="4"></textarea><br>
+                            <label for="businessJustificationPublish">Business justification:</label>
+                            <textarea id="businessJustificationPublish" rows="4"></textarea><br>
+                        </div>
+                        <div id="issue_hafs_apli" class="issue-sub-form d-none">
+                            Application Login Issue
+                        </div>
+                        <div id="issue_hafs_rdi" class="issue-sub-form d-none">
+                            Remote Desktop Issue
+                        </div>
+                        <div id="issue_hafs_pepli" class="issue-sub-form d-none">
+                            PEP Login Issue
+                        </div>
+                        <div id="issue_hafs_hci" class="issue-sub-form d-none">
+                            Hotel Connect Issue
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group d-none issueOption" id="vantage_citrix_i" >
+                    <label for="platform">Report an issue</label>               
+                    <select  id="issue_vantage_citrix">
+                        <option value="">Select an option</option>
+                        <option value="issue_vant_App_i">Application Issue</option>
+                        <option value="issue_vant_hci">Hotel Connect Issue</option>
+                        <option value="issue_vant_Login_i">Login Issue</option>
+                        <option value="issue_vant_pepli">PEP Login Issue</option>
+                        <option value="issue_vant_flpa">Failed to Launch Published Application</option>
+                        <option value="issue_vant_SGD">Session Getting Disconnection</option>
+                        <option value="issue_vant_apli">Application Login Issue</option>
+                        <option value="issue_vant_rdi">Remote Desktop Issue</option>
+                    </select>
+                    <div id="issue_vant_flpa" class="issue-sub-form d-none">  
+                        VANTAGE    Failed to Launch Published Application              
+                    </div>
+                    <div id="issue_vant_SGD" class="issue-sub-form d-none">
+                        VANTAGE Session Getting Disconnection
+                    </div>
+                    <div id="issue_vant_apli" class="issue-sub-form d-none">
+                        VANTAGE  Applicationvantin Issue
+                    </div>
+                    <div id="issue_vant_rdi" class="issue-sub-form d-none">
+                        VANTAGE Remote DeskvantIssue
+                    </div>
+                    <div id="issue_vant_pepli" class="issue-sub-form d-none">
+                        VANTAGE PEP Login Ivant
+                    </div>
+                    <div id="issue_vant_hci" class="issue-sub-form d-none">
+                        VANTAGE  Hotel Connect Issue
+                    </div>
+                </div>     
+            </div>
+    
+            <script>
+                $(document).ready(function() {
+                    var serviceType;
+                    $('.soption input').on('click', function(event) {
+                        serviceType = $(this).val();
+                        $('#platforms').removeClass('d-none')
+                        $('#CPlatform').val(null);
+                        $("#hafs_citrix_services,#vant_citrix_services").val(null);
+                        if(serviceType=='RIssue'){
+                            $('.Services_Box').hide();
+                            $('.Issues_Box').show();
+                            var list = document.querySelectorAll(".serviceOption");
+                             for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');
+                            }
+                            return
+                        }
+                        if(serviceType=='RService'){
+                            $('.Services_Box').show();
+                            $('.Issues_Box').hide();
+                            var list = document.querySelectorAll(".issueOption");
+                             for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');
+                            }
+                            return
+                        }
+                    });
+
+                    var AccessRequest
+                    $('.ACRequestForm input').on('click', function(event) {
+                        AccessRequest = $(this).val();
+                        var list = document.querySelectorAll(".accrequest-form");
+                          for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');}
+                         $("#"+AccessRequest).removeClass('d-none');
+                    })
+                    var ApplicationRequest
+                    $('.ApplicationRequestForm input').on('click', function(event) {
+                        ApplicationRequest = $(this).val();
+                        var list = document.querySelectorAll(".Apprequest-form");
+                          for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');}
+                         $("#"+ApplicationRequest).removeClass('d-none');
+                    })
+
+                var applicationsystem
+                  $('input[type=checkbox]').on('change', function() {
+                    applicationsystem = $(this).val()
+                    if(applicationsystem=='ARapplicationsys'){
+                        if($(this).is(':checked')){
+                          var list = document.querySelectorAll(".isappsys");
+                          for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');} 
+                          var list2 = document.querySelectorAll(".forappsys");
+                          for (var i = 0; i < list2.length; ++i) {list2[i].classList.remove('d-none');}                           
+                        }else{
+                          var list = document.querySelectorAll(".isappsys");
+                          for (var i = 0; i < list.length; ++i) {list[i].classList.remove('d-none');} 
+                          var list2 = document.querySelectorAll(".forappsys");
+                          for (var i = 0; i < list2.length; ++i) {list2[i].classList.add('d-none');} 
+                        }
+                    }
+                    if(applicationsystem=='ARpermission'){
+                        if($(this).is(':checked')){
+                          var list = document.querySelectorAll(".rolePermission");
+                          for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');}
+                          var list2 = document.querySelectorAll(".forpermission");
+                          for (var i = 0; i < list2.length; ++i) {list2[i].classList.remove('d-none');}
+                        }else{
+                            var list = document.querySelectorAll(".rolePermission");
+                          for (var i = 0; i < list.length; ++i) {list[i].classList.remove('d-none');}
+                          var list2 = document.querySelectorAll(".forpermission");
+                          for (var i = 0; i < list2.length; ++i) {list2[i].classList.add('d-none');}
+                        }
+                    }
+                    if(applicationsystem=='ARremoveall'){
+                        if($(this).is(':checked')){
+                          var list = document.querySelectorAll(".removeAcess");
+                          for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');}
+                         
+                        }else{
+                            var list = document.querySelectorAll(".removeAcess");
+                          for (var i = 0; i < list.length; ++i) {list[i].classList.remove('d-none');}
+              
+                        }
+                    }
+                    });
+
+
+                    $('#CPlatform').on('change', function (e) {
+                        var cc = $("#CPlatform").val();
+                        $("#hafs_citrix_services,#vant_citrix_services").val(null);
+                        $('input[name="vataccreq"]').prop('checked', false);
+                        $('input[name="accreq"]').prop('checked', false);
+                        if(serviceType=='RService'){
+                            var list = document.querySelectorAll(".serviceOption");
+                                for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');}
+                            $("#"+cc).removeClass('d-none');
+                        }  
+                        if(serviceType=='RIssue'){
+                            var list = document.querySelectorAll(".issueOption");
+                                for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');}
+                            $("#"+cc+'_i').removeClass('d-none');
+                        }                        
+                    });
+
+                    $('#hafs_citrix_services').on('change', function (e) {
+                        var cc = $("#hafs_citrix_services").val();
+                        var list = document.querySelectorAll(".service-sub-form");
+                                for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');}
+                        $("#"+cc).removeClass('d-none')
+                    });
+
+                    $('#vant_citrix_services').on('change', function (e) {
+                        var cc = $("#vant_citrix_services").val();
+                        var list = document.querySelectorAll(".service-sub-form");
+                                for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');}
+
+                        $("#"+cc).removeClass('d-none')
+                    })
+                    $('#issue_hafs_citrix').on('change', function (e) {
+                        var cc = $("#issue_hafs_citrix").val();
+                        var list = document.querySelectorAll(".issue-sub-form");
+                        for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');}
+                        $("#"+cc).removeClass('d-none')
+                    })
+
+                    $('#issue_vantage_citrix').on('change', function (e) {
+                        var cc = $("#issue_vantage_citrix").val();
+                        var list = document.querySelectorAll(".issue-sub-form");
+                        for (var i = 0; i < list.length; ++i) {list[i].classList.add('d-none');}
+                        $("#"+cc).removeClass('d-none')
+                    })
+
+                })
+            </script>
+           
+            <div class="step2">         
+          
+                
+              
+                
+                
+                
+            
+                <!-- Report an issue section -->
+                <div style="display: none;">
+
+                    <div><br></div>  
+                    <label for="Report_Issue">Report an Issue:</label>
+                    <div><br></div>  
+                    <select id="Report_Issue" onchange="showFields(this.value)">
+                        <div><br></div>  
+                        <option value="">Select an option</option>
+                        <div><br></div>  
+                        <option value="1">Failed to Launch Published Application</option>
+                        <div><br></div>  
+                        <option value="2">Session Getting Disconnection</option>
+                        <div><br></div>  
+                        <option value="3">Application Login Issue</option>
+                        <div><br></div>  
+                        <option value="4">Remote Desktop Issue</option>
+                        <div><br></div>  
+                        <option value="5">PEP Login Issue</option>
+                        <div><br></div>  
+                        <option value="6">Hotel Connect Issue</option>
+                        <div><br></div>  
+                        <option value="7">Session Getting Disconnected</option>           
+                    </select>
+                </div>
+                
+                
+                <div id="removeApplication" style="display: none;">
+                    <div><br></div>  
+                    <label for="publishedAppName">Published Icon Name:</label>
+                    <div><br></div>  
+                    <input type="text" id="publishedAppName"><br>
+                    <div><br></div>  
+                    <label for="preferredDateRemove">Preferred date for this change:</label>
+                    <div><br></div>  
+                    <input type="date" id="preferredDateRemove"><br>
+                    <div><br></div>  
+                    <label for="businessJustificationRemove">Business justification:</label>
+                    <div><br></div>  
+                    <textarea id="businessJustificationRemove" rows="4"></textarea><br>
+                </div>
+                
+                <div id="changeURL" style="display: none;">
+                    <div><br></div>  
+                    <label for="publishedAppNameChange">Published Icon Name:</label>
+                    <input type="text" id="publishedAppNameChange"><br>
+                    <div><br></div>  
+                    <label for="preferredDateChange">Preferred date for this change:</label>
+                    <input type="date" id="preferredDateChange"><br>
+                    <div><br></div>  
+                    <label for="newURL">New URL details:</label>
+                    <div><br></div>  
+                    <input type="text" id="newURL"><br>
+                    <div><br></div>  
+                    <label for="validatorContentChange">Validator/POC content details:</label>
+                    <div><br></div>  
+                    <textarea id="validatorContentChange" rows="4"></textarea><br>
+                    <div><br></div>  
+                    <label for="businessJustificationChange">Business justification:</label>
+                    <div><br></div>  
+                    <textarea id="businessJustificationChange" rows="4"></textarea><br>
+                </div>              
+             </div>
+                <!-- End of Report An Issue -->
+            <script>
+            function showDropdown(dropdownId) {
+              var dropdowns = document.getElementsByClassName("dropdown");
+              for (var i = 0; i < dropdowns.length; i++) {
+                dropdowns[i].style.display = "none";
+              }
+              document.getElementById(dropdownId).style.display = "block";
+            }
+            </script>
+                 
+            <div class="form-group">
+            <div>
+            <input type="submit" value="Submit">
+            <input type="file" value="Upload__error_screenshot" id="myFile" name="filename2" style="float: right;"">
+            </div>
+
+        </form>
+    </div>
+</div>
+    <script>
+        function showServiceOptions() {
+            document.getElementById("service_options").style.display = "block";
+            // You can further populate additional fields based on the selected service
+            // For now, let's keep it as a placeholder
+            document.getElementById("additional_fields").innerHTML = "<p>Additional fields for the selected service will appear here.</p>";
+        }
+    </script>
+    <script>
+        function showIssueOptions() {
+            document.getElementById("citrix_platform").style.display = "block";
+            document.getElementById("Issue_options").style.display = "block";
+            // document.getElementById("additional_fields").style.display = "block";
+            // You can further populate additional fields based on the selected issue
+            // For now, let's keep it as a placeholder
+            document.getElementById("additional_fields").innerHTML = "<p>Additional fields for the selected issue will appear here.</p>";
+        }
+    </script>
+</body>
+</html>
